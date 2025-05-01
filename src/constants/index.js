@@ -57,6 +57,30 @@ export const PROJECTS = [
   
 ];
 
+
+export const VIDEOS=[
+  {
+    id: 1,
+    title: "Yes,I am Filmmaker",
+    videoUrl: "https://res.cloudinary.com/dqvllpngm/video/upload/v1746124907/Yes_I_am_Filmmaker_oqumst.mp4",
+    description: "Fast-paced edits covering a cultural college event.",
+  },
+  {
+    id: 2,
+    title: "Fas Fas Fas",
+    videoUrl: "https://res.cloudinary.com/dqvllpngm/video/upload/v1746125714/Fas_Fas_Fss_osp4xi.mp4",
+    description: "A short cinematic film showcasing my storytelling and pacing.",
+  },
+  {
+    id: 3,
+    title: "It's just a dream",
+    videoUrl: "https://res.cloudinary.com/dqvllpngm/video/upload/v1746126406/It_s_just_a_dream_ujazrj.mp4",
+    description: "A short cinematic film showcasing my storytelling and pacing.",
+  },
+  
+  
+  // Add more videos...
+];
 export const CONTACT = {
   phoneNo: "7499750322",
   email: "thepratikpk@gmail.com",
