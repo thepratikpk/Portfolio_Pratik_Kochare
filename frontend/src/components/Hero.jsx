@@ -51,8 +51,8 @@ const Hero = () => {
             className='pb-2 text-4xl tracking-tighter lg:text-8xl'>
               Pratik Kochare
             </motion.h2>
-            <motion.span className='bg-gradient-to-r from-stone-300 to-stone-600 bg-clip-text text-3xl tracking-tight text-transparent'>
-              FilmMaker
+            <motion.span className='bg-gradient-to-r from-stone-300 to-stone-500 bg-clip-text text-3xl tracking-tight text-transparent'>
+              FilmMaker & Full-Stack Developer
             </motion.span>
             <motion.p 
               variants={childVarients}

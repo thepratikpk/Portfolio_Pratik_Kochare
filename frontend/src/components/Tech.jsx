@@ -2,7 +2,7 @@ import React from 'react'
 import { DiRedis } from 'react-icons/di'
 import { FaNodeJs } from 'react-icons/fa'
 import { RiReactjsLine, RiTailwindCssFill } from 'react-icons/ri'
-import { SiAdobeaftereffects, SiAdobephotoshop, SiAdobepremierepro, SiMongodb } from 'react-icons/si'
+import { SiAdobeaftereffects, SiAdobephotoshop, SiAdobepremierepro, SiExpress, SiMongodb } from 'react-icons/si'
 import { TbBrandNextjs } from 'react-icons/tb'
 import { motion } from 'framer-motion'
 
@@ -54,6 +54,20 @@ const Tech = () => {
                     variants={iconVarients(5)}
                     className='p-4'>
                     <FaNodeJs className='text-7xl text-green-500' />
+                </motion.div>
+                <motion.div
+                    initial="initial"
+                    animate="animate"
+                    variants={iconVarients(4)}
+                    className='p-4'>
+                    <SiExpress className='text-7xl ' />
+                </motion.div>
+                <motion.div
+                    initial="initial"
+                    animate="animate"
+                    variants={iconVarients(3.5)}
+                    className='p-4'>
+                    <SiMongodb className='text-7xl text-green-500' />
                 </motion.div>
                 <motion.div
                     initial="initial"

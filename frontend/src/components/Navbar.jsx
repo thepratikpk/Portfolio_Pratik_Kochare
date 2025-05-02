@@ -15,7 +15,7 @@ const Navbar = () => {
                 aria-label='LinkedIn'>
                 <FaLinkedin/>
             </a>
-            <a href="http://www.linkedin.com/in/pratik-kochare-91534b281"
+            <a href="https://github.com/thepratikpk"
                 target='_blank'
                 rel='noopener noreferrer'
                 aria-label='GitHub'>
