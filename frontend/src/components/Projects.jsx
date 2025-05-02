@@ -1,14 +1,11 @@
-// components/Projects.jsx
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { PROJECTS } from '../constants';
-import { motion, AnimatePresence } from 'framer-motion';
-import VideoGallery from './VideoGallery';
 
 const Projects = () => {
-  const [showGallery, setShowGallery] = useState(false);
-
   return (
-    <div className='pb-4'>
+    <div id="projects" className='pb-4'>
       <h2 className='my-20 text-center text-4xl'>Projects</h2>
       <div>
         {PROJECTS.map((project, index) => (
@@ -32,21 +29,20 @@ const Projects = () => {
       </div>
       
       <div className="text-center mt-20">
-        <motion.button
-          onClick={() => setShowGallery(true)}
+        <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="px-8 py-4 bg-gradient-to-r from-stone-600 to-stone-800 rounded-full text-xl font-medium"
         >
-          My Visual Magic
-        </motion.button>
+          <Link 
+            to="/videos"
+            className="inline-block px-8 py-4 bg-gradient-to-r from-stone-600 to-stone-800 rounded-full text-xl font-medium"
+          >
+            My Visual Magic
+          </Link>
+        </motion.div>
       </div>
-
-      <AnimatePresence>
-        {showGallery && <VideoGallery onClose={() => setShowGallery(false)} />}
-      </AnimatePresence>
     </div>
   );
-}
+};
 
 export default Projects;
