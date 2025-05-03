@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { PROJECTS } from '../constants';
+import { FaGithub } from 'react-icons/fa';
 
 const Projects = () => {
   return (
@@ -22,7 +23,19 @@ const Projects = () => {
               />
             </div>
             <div className='w-full max-w-xl lg:w-3/4'>
-              <h3 className='mb-2 font-semibold text-2xl'>{project.title}</h3>
+              <div className="flex items-center gap-3 mb-2">
+                <h3 className='font-semibold text-2xl'>{project.title}</h3>
+                {project.github && (
+                  <a 
+                    href={project.github} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="hover:text-gray-400 transition-colors"
+                  >
+                    <FaGithub size={20} />
+                  </a>
+                )}
+              </div>
               <p className='mb-4 text-stone-400'>{project.description}</p>
               {project.technologies.map((tech, i) => (
                 <span

@@ -18,6 +18,7 @@ export const PROJECTS = [
     description:
       "A platfrom which showcases a generalized list of exciting events for all visitors",
     technologies: ["React","TailwindCss","MongoDB","ExpressJs"],
+    github:"https://github.com/thepratikpk/EVENTALLY"
   },
   {
     title: "Portfolio Website",
@@ -25,6 +26,7 @@ export const PROJECTS = [
     description:
       "A personal portfolio website showcasing projects, skills, and contact information.",
     technologies: ["React","TailwindCss"],
+    github:"https://github.com/thepratikpk/Portfolio_Pratik_Kochare"
   },
   
   
