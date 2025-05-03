@@ -7,19 +7,28 @@ const Projects = () => {
   return (
     <div id="projects" className='pb-20'>
       <h2 className='my-20 text-center text-4xl'>Projects</h2>
+
+      {/* Normal projects from constants */}
       <div>
         {PROJECTS.map((project, index) => (
           <div key={index} className='mb-8 flex flex-wrap lg:justify-center'>
             <div className='w-full lg:w-1/4'>
-              <img src={project.image} width={250} height={250} alt={project.title} className='mb-6 rounded'/>
+              <img
+                src={project.image}
+                width={250}
+                height={250}
+                alt={project.title}
+                className='mb-6 rounded'
+              />
             </div>
             <div className='w-full max-w-xl lg:w-3/4'>
-              <h3 className='mb-2 font-semibold text-2xl'>
-                {project.title}
-              </h3>
+              <h3 className='mb-2 font-semibold text-2xl'>{project.title}</h3>
               <p className='mb-4 text-stone-400'>{project.description}</p>
-              {project.technologies.map((tech, index) => (
-                <span className='mr-2 rounded bg-stone-900 p-2 text-sm font-medium text-stone-300' key={index}>
+              {project.technologies.map((tech, i) => (
+                <span
+                  className='mr-2 rounded bg-stone-900 p-2 text-sm font-medium text-stone-300'
+                  key={i}
+                >
                   {tech}
                 </span>
               ))}
@@ -27,19 +36,38 @@ const Projects = () => {
           </div>
         ))}
       </div>
-      
-      <div className="text-center mt-20">
+
+      {/* Hardcoded Last Project: My Visual Magic */}
+      <div className='mt-20 flex flex-wrap lg:justify-center items-center gap-8'>
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.98 }}
+          className='w-full lg:w-[30%] rounded-xl overflow-hidden shadow-lg'
         >
-          <Link 
-            to="/videos"
-            className="inline-block px-8 py-4 bg-gradient-to-r from-stone-600 to-stone-800 rounded-full text-xl font-medium"
-          >
-            My Visual Magic
+          <Link to="/videos">
+            <motion.video
+              className="w-full h-full object-cover rounded-xl"
+              src="https://res.cloudinary.com/dqvllpngm/video/upload/v1746124907/Yes_I_am_Filmmaker_oqumst.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
           </Link>
         </motion.div>
+
+        <div className='w-full max-w-xl lg:w-[60%]'>
+          <h3 className='mb-3 font-semibold text-3xl'>My Visual Magic</h3>
+          <p className='mb-4 text-stone-400'>
+            A curated gallery of my cinematic video edits and creative work.
+          </p>
+          <span className='mr-2 rounded bg-stone-900 p-2 text-sm font-medium text-stone-300'>
+            Premiere Pro
+          </span>
+          <span className='mr-2 rounded bg-stone-900 p-2 text-sm font-medium text-stone-300'>
+            After Effects
+          </span>
+        </div>
       </div>
     </div>
   );
