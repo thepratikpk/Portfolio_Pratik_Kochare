@@ -14,7 +14,12 @@ const VideoGallery = ({ onClose }) => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get('/api/videos');
+        const BACKEND_URI = import.meta.env.DEV
+  ? ''
+  : import.meta.env.VITE_BACKEND_URI;
+
+const response = await axios.get(`${BACKEND_URI}/api/videos`);
+
         setVideos(response.data.data);
         setLoading(false);
       } catch (err) {
