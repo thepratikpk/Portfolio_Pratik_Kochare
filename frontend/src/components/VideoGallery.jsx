@@ -63,6 +63,7 @@ const response = await axios.get(`${BACKEND_URI}/api/videos`);
           <p className="text-sm text-stone-400 mt-1">Error loading videos: {error}</p>
         </div>
       </motion.div>
+      
     );
   }
 
