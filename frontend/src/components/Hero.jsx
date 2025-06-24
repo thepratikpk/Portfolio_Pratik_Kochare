@@ -1,5 +1,6 @@
 import React from 'react';
 import profilepic from "../assets/profilepic.png";
+import profilepic2 from "../assets/profilepic2.png"
 import { HERO_CONTENT } from "../constants/index";
 import { motion } from 'framer-motion';
 
@@ -28,7 +29,7 @@ const Hero = () => {
         {/* Image Container (Top on small screens, Right on large screens) */}
         <div className='w-full lg:w-1/2 flex justify-center lg:justify-start lg:p-8 order-1 lg:order-2 lg:transform lg:-translate-y-25 -z-10'>
           <motion.img 
-            src={profilepic} 
+            src={profilepic2} 
             alt='Pratik' 
             className='max-w-full h-auto lg:max-w-xl ' // Adjust size as needed
             width={650}
@@ -52,7 +53,7 @@ const Hero = () => {
               Pratik Kochare
             </motion.h2>
             <motion.span className='bg-gradient-to-r from-stone-300 to-stone-500 bg-clip-text text-3xl tracking-tight text-transparent'>
-              FilmMaker & Full-Stack Developer
+              Full-Stack Developer
             </motion.span>
             <motion.p 
               variants={childVarients}

@@ -3,7 +3,9 @@ import project2 from "../assets/projects/project-2.webp";
 import project3 from "../assets/projects/project-3.webp";
 import project4 from "../assets/projects/project-4.webp";
 
-export const HERO_CONTENT = `I am a filmmaker and full stack web developer specializing in the MERN stack. With 4 years of experience in filmmaking and video editing, I’ve honed my craft using Adobe Premiere Pro and After Effects to tell visually compelling stories. On the development side, I build dynamic and responsive web applications using MongoDB, Express, React, and Node.js. My passion lies in blending creativity with technology — whether it's through captivating films or seamless digital experiences.`;
+export const HERO_CONTENT = `I'm a full stack web developer with a strong focus on the MERN stack — MongoDB, Express.js, React.js, and Node.js. I specialize in building scalable, high-performance web applications that are both visually polished and functionally robust. From crafting responsive front-end interfaces to designing efficient back-end systems, I aim to deliver seamless user experiences across devices.
+
+In addition to my development work, I have experience in filmmaking and video editing, using tools like Adobe Premiere Pro and After Effects.`;
 
 export const ABOUT_TEXT = `I am a dedicated and versatile full stack developer with a passion for creating efficient and user-friendly web applications. With 5 years of professional experience, I have worked with a variety of technologies, including React, Next.js, Node.js, MySQL, PostgreSQL, and MongoDB. My journey in web development began with a deep curiosity for how things work, and it has evolved into a career where I continuously strive to learn and adapt to new challenges. I thrive in collaborative environments and enjoy solving complex problems to deliver high-quality solutions. Outside of coding, I enjoy staying active, exploring new technologies, and contributing to open-source projects.`;
 
@@ -17,7 +19,7 @@ export const PROJECTS = [
     image: project1,
     description:
       "A platfrom which showcases a generalized list of exciting events for all visitors",
-    technologies: ["React","TailwindCss","MongoDB","ExpressJs"],
+    technologies: ["React","TailwindCss","MongoDB","ExpressJs","NodeJs"],
     github:"https://github.com/thepratikpk/EVENTALLY"
   },
   {
@@ -25,7 +27,7 @@ export const PROJECTS = [
     image: project3,
     description:
       "A personal portfolio website showcasing projects, skills, and contact information.",
-    technologies: ["React","TailwindCss"],
+    technologies: ["React","TailwindCss","NodeJs","MongoDB","ExpressJs"],
     github:"https://github.com/thepratikpk/Portfolio_Pratik_Kochare"
   },
   
