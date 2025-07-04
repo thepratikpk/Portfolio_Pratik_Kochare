@@ -61,7 +61,7 @@ const Hero = () => {
               {HERO_CONTENT}
             </motion.p>
             <motion.a 
-              href="/resume.pdf"
+              href="/Pratik_Kochare_CV.pdf"
               target="_blank"
               rel="noopener noreferrer"
               download
