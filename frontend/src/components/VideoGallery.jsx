@@ -10,16 +10,19 @@ const VideoGallery = ({ onClose }) => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  // ✅ Add global mute state here
+  const [isMuted, setIsMuted] = useState(true);
+  const toggleMuteAll = () => setIsMuted(prev => !prev);
 
   useEffect(() => {
     const fetchVideos = async () => {
       try {
         const BACKEND_URI = import.meta.env.DEV
-  ? ''
-  : import.meta.env.VITE_BACKEND_URI;
+          ? ''
+          : import.meta.env.VITE_BACKEND_URI;
 
-const response = await axios.get(`${BACKEND_URI}/api/videos`);
-
+        const response = await axios.get(`${BACKEND_URI}/api/videos`);
         setVideos(response.data.data);
         setLoading(false);
       } catch (err) {
@@ -63,7 +66,6 @@ const response = await axios.get(`${BACKEND_URI}/api/videos`);
           <p className="text-sm text-stone-400 mt-1">Error loading videos: {error}</p>
         </div>
       </motion.div>
-      
     );
   }
 
@@ -117,6 +119,8 @@ const response = await axios.get(`${BACKEND_URI}/api/videos`);
                     description={video.description}
                     playOnHover={true}
                     className="w-full h-full object-cover"
+                    isMuted={isMuted}             // ✅ pass global mute state
+                    toggleMuteAll={toggleMuteAll} // ✅ pass global toggle
                   />
                 </div>
               </motion.div>
