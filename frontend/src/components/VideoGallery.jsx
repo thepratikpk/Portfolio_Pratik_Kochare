@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import VideoPlayer from './VideoPlayer';
 import axios from 'axios';
 import { FiAlertTriangle, FiLoader } from 'react-icons/fi';
+import { API } from '../lib/axios';
 
 const VideoGallery = ({ onClose }) => {
   const [hoveredId, setHoveredId] = useState(null);
@@ -15,24 +16,20 @@ const VideoGallery = ({ onClose }) => {
   const [isMuted, setIsMuted] = useState(true);
   const toggleMuteAll = () => setIsMuted(prev => !prev);
 
-  useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const BACKEND_URI = import.meta.env.DEV
-          ? ''
-          : import.meta.env.VITE_BACKEND_URI;
+ useEffect(() => {
+  const fetchVideos = async () => {
+    try {
+      const response = await API.get('/api/videos'); // no full URL needed
+      setVideos(response.data.data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        const response = await axios.get(`${BACKEND_URI}/api/videos`);
-        setVideos(response.data.data);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-
-    fetchVideos();
-  }, []);
+  fetchVideos();
+}, []);
 
   if (loading) {
     return (
