@@ -5,6 +5,7 @@ import VideoPlayer from './VideoPlayer';
 import axios from 'axios';
 import { FiAlertTriangle, FiLoader } from 'react-icons/fi';
 import { API } from '../lib/axios';
+import { videoPreloader } from '../utils/videoPreloader';
 
 const VideoGallery = ({ onClose }) => {
   const [hoveredId, setHoveredId] = useState(null);
@@ -19,8 +20,14 @@ const VideoGallery = ({ onClose }) => {
  useEffect(() => {
   const fetchVideos = async () => {
     try {
-      const response = await API.get('/api/videos'); // no full URL needed
-      setVideos(response.data.data);
+      const response = await API.get('/api/videos');
+      const videoData = response.data.data;
+      setVideos(videoData);
+      
+      // Start preloading video metadata in background
+      const videoUrls = videoData.map(video => video.videoUrl);
+      videoPreloader.queuePreload(videoUrls);
+      
     } catch (err) {
       setError(err.message);
     } finally {
@@ -96,13 +103,16 @@ const VideoGallery = ({ onClose }) => {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
-          {videos.map((video) => {
+          {videos.map((video, index) => {
             const isHovered = hoveredId === video._id;
             const isOtherHovered = hoveredId && hoveredId !== video._id;
 
             return (
               <motion.div
                 key={video._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 onMouseEnter={() => setHoveredId(video._id)}
                 onMouseLeave={() => setHoveredId(null)}
                 className={`relative rounded-xl overflow-hidden shadow-lg transition-all duration-300 ${
@@ -116,8 +126,8 @@ const VideoGallery = ({ onClose }) => {
                     description={video.description}
                     playOnHover={true}
                     className="w-full h-full object-cover"
-                    isMuted={isMuted}             // ✅ pass global mute state
-                    toggleMuteAll={toggleMuteAll} // ✅ pass global toggle
+                    isMuted={isMuted}
+                    toggleMuteAll={toggleMuteAll}
                   />
                 </div>
               </motion.div>

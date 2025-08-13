@@ -15,24 +15,31 @@ export const EXPERIENCES = [
 
 export const PROJECTS = [
   {
-    title: "EVENTALLY-Adaptive Event Organizer",
+    title: "EVENTALLY - Adaptive Event Organizer",
     image: project1,
     description:
-      "A platfrom which showcases a generalized list of exciting events for all visitors",
-    technologies: ["React","TailwindCss","MongoDB","ExpressJs","NodeJs"],
-    github:"https://github.com/thepratikpk/EVENTALLY"
+      "A platform that showcases a generalized list of exciting events for all visitors, with smart filtering and interest-based recommendations.",
+    technologies: ["React", "TailwindCss", "MongoDB", "ExpressJs", "NodeJs"],
+    github: "https://github.com/thepratikpk/EVENTALLY"
+  },
+  {
+    title: "DocuQuery - Intelligent Document Analysis",
+    image: project4, // replace with your imported image variable
+    description:
+      "An AI-powered document analysis system built during a hackathon, enabling semantic search and contextual queries on uploaded documents.",
+    technologies: ["React", "TailwindCss", "NodeJs", "MongoDB", "ExpressJs", "LLM", "FAISS"],
+    github: "https://github.com/thepratikpk/BFHT" // replace with actual repo link
   },
   {
     title: "Portfolio Website",
     image: project3,
     description:
       "A personal portfolio website showcasing projects, skills, and contact information.",
-    technologies: ["React","TailwindCss","NodeJs","MongoDB","ExpressJs"],
-    github:"https://github.com/thepratikpk/Portfolio_Pratik_Kochare"
+    technologies: ["React", "TailwindCss", "NodeJs", "MongoDB", "ExpressJs"],
+    github: "https://github.com/thepratikpk/Portfolio_Pratik_Kochare"
   },
-  
-  
 ];
+
 
 
 export const VIDEOS=[

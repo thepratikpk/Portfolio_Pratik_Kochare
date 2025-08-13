@@ -65,11 +65,12 @@ const Projects = () => {
               loop
               muted
               playsInline
+              preload="metadata"
             />
           </Link>
         </motion.div>
 
-  
+
 
         <div className='w-full max-w-xl lg:w-[60%]'>
           <h3 className='mb-3 font-semibold text-3xl'>My Visual Magic</h3>
