@@ -1,42 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import VideoPlayer from './VideoPlayer';
-import axios from 'axios';
 import { FiAlertTriangle, FiLoader } from 'react-icons/fi';
 import { API } from '../lib/axios';
 import { videoPreloader } from '../utils/videoPreloader';
 
 const VideoGallery = ({ onClose }) => {
+  const navigate = useNavigate();
   const [hoveredId, setHoveredId] = useState(null);
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   // ✅ Add global mute state here
   const [isMuted, setIsMuted] = useState(true);
   const toggleMuteAll = () => setIsMuted(prev => !prev);
 
- useEffect(() => {
-  const fetchVideos = async () => {
-    try {
-      const response = await API.get('/api/videos');
-      const videoData = response.data.data;
-      setVideos(videoData);
-      
-      // Start preloading video metadata in background
-      const videoUrls = videoData.map(video => video.videoUrl);
-      videoPreloader.queuePreload(videoUrls);
-      
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+  // Handle navigation fallback
+  const handleBackClick = () => {
+    if (onClose) {
+      onClose();
+    } else {
+      // Fallback navigation for direct URL access
+      navigate('/');
     }
   };
 
-  fetchVideos();
-}, []);
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await API.get('/api/videos');
+        const videoData = response.data.data;
+        setVideos(videoData);
+
+        // Start preloading video metadata in background
+        const videoUrls = videoData.map(video => video.videoUrl);
+        videoPreloader.queuePreload(videoUrls);
+
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVideos();
+  }, []);
 
   if (loading) {
     return (
@@ -83,10 +93,9 @@ const VideoGallery = ({ onClose }) => {
     >
       <div className="max-w-7xl mx-auto relative">
         {/* Back Button */}
-        <Link
-          to="/"
-          onClick={onClose}
-          className="absolute top-4 left-4 sm:top-6 sm:left-6 text-stone-300 hover:text-white transition-all flex items-center gap-2 text-sm sm:text-base"
+        <button
+          onClick={handleBackClick}
+          className="absolute top-4 left-4 sm:top-6 sm:left-6 text-stone-300 hover:text-white transition-all flex items-center gap-2 text-sm sm:text-base cursor-pointer"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path
@@ -96,7 +105,7 @@ const VideoGallery = ({ onClose }) => {
             />
           </svg>
           Back to Home
-        </Link>
+        </button>
 
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-stone-100 mb-10 sm:mb-12 pt-16 sm:pt-20 text-center tracking-tight leading-snug">
           My Visual Magic
@@ -115,9 +124,8 @@ const VideoGallery = ({ onClose }) => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 onMouseEnter={() => setHoveredId(video._id)}
                 onMouseLeave={() => setHoveredId(null)}
-                className={`relative rounded-xl overflow-hidden shadow-lg transition-all duration-300 ${
-                  isOtherHovered ? 'blur-sm brightness-75' : ''
-                } ${isHovered ? 'scale-105 sm:scale-110 z-10 shadow-2xl' : ''}`}
+                className={`relative rounded-xl overflow-hidden shadow-lg transition-all duration-300 ${isOtherHovered ? 'blur-sm brightness-75' : ''
+                  } ${isHovered ? 'scale-105 sm:scale-110 z-10 shadow-2xl' : ''}`}
               >
                 <div className="aspect-video">
                   <VideoPlayer

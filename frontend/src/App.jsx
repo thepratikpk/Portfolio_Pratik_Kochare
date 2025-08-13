@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Contact from "./components/Contact";
-import Experience from "./components/Experience";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import Projects from "./components/Projects";
@@ -26,7 +25,16 @@ function App() {
               <Hero />
               <Tech />
               <Projects />
-              {/* <Experience /> */}
+              <Contact />
+            </div>
+          } />
+          {/* Catch-all route for any unmatched paths */}
+          <Route path="*" element={
+            <div className="container mx-auto px-8">
+              <Navbar />
+              <Hero />
+              <Tech />
+              <Projects />
               <Contact />
             </div>
           } />
