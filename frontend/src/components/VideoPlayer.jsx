@@ -22,16 +22,39 @@ const VideoPlayer = ({
   const [showThumbnail, setShowThumbnail] = useState(true);
   const [thumbnailError, setThumbnailError] = useState(false);
   const [hoverTimeout, setHoverTimeout] = useState(null);
+  const [leaveTimeout, setLeaveTimeout] = useState(null);
   const [connectionQuality, setConnectionQuality] = useState('medium');
   const [isBuffering, setIsBuffering] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
+  const [isPreloaded, setIsPreloaded] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
   
-  // Use intersection observer for lazy loading
+  // Use intersection observer for lazy loading with aggressive preloading
   const { targetRef, hasIntersected } = useIntersectionObserver({
-    threshold: 0.1,
-    rootMargin: `${VIDEO_CONFIG.LOADING.preloadDistance}px`
+    threshold: 0.05, // Start loading earlier
+    rootMargin: `${VIDEO_CONFIG.LOADING.preloadDistance * 2}px` // Larger preload area
   });
+
+  // Preload video metadata when in viewport
+  useEffect(() => {
+    if (hasIntersected && !isPreloaded && !hasError) {
+      setIsPreloaded(true);
+      // Start preloading metadata immediately when visible
+      const video = document.createElement('video');
+      video.preload = 'metadata';
+      video.muted = true;
+      video.src = generateOptimizedVideoUrl(videoUrl);
+      
+      video.addEventListener('loadedmetadata', () => {
+        setVideoReady(true);
+      });
+      
+      video.addEventListener('error', () => {
+        console.warn('Preload failed for:', videoUrl);
+      });
+    }
+  }, [hasIntersected, isPreloaded, hasError, videoUrl]);
 
   // Detect connection quality on mount with error handling
   useEffect(() => {
@@ -75,41 +98,58 @@ const VideoPlayer = ({
 
   const handleMouseEnter = () => {
     if (playOnHover && !hasError) {
-      // Add delay before loading video to prevent unnecessary loads on quick hovers
+      // Clear any pending leave timeout
+      if (leaveTimeout) {
+        clearTimeout(leaveTimeout);
+        setLeaveTimeout(null);
+      }
+
+      // Reduced delay for faster response, instant if video is ready
+      const delay = videoReady ? 50 : (VIDEO_CONFIG?.LOADING?.hoverDelay || 150);
+      
       const timeout = setTimeout(() => {
         setIsHovered(true);
         if (!videoLoaded) {
           setIsLoading(true);
           setVideoLoaded(true);
         } else if (videoRef.current) {
-          // Try to play immediately, even if not fully loaded
+          // Instant play for preloaded videos
           videoRef.current.play().catch((error) => {
             console.warn('Video play failed:', error);
-            // Don't set error state for play failures, they're common
           });
         }
-      }, VIDEO_CONFIG?.LOADING?.hoverDelay || 200);
+      }, delay);
       setHoverTimeout(timeout);
     }
   };
 
   const handleMouseLeave = () => {
     if (playOnHover) {
-      // Clear timeout if user leaves before delay
+      // Clear hover timeout if user leaves before delay
       if (hoverTimeout) {
         clearTimeout(hoverTimeout);
         setHoverTimeout(null);
       }
       
-      setIsHovered(false);
-      if (videoRef.current) {
-        try {
-          videoRef.current.pause();
-          videoRef.current.currentTime = 0;
-        } catch (error) {
-          console.warn('Video pause/reset failed:', error);
+      // Add small delay before pausing to prevent flickering on quick mouse movements
+      const timeout = setTimeout(() => {
+        setIsHovered(false);
+        if (videoRef.current) {
+          try {
+            videoRef.current.pause();
+            // Don't reset currentTime immediately for smoother re-hover
+            setTimeout(() => {
+              if (videoRef.current && !isHovered) {
+                videoRef.current.currentTime = 0;
+              }
+            }, 300);
+          } catch (error) {
+            console.warn('Video pause/reset failed:', error);
+          }
         }
-      }
+      }, 100); // Small delay to prevent flickering
+      
+      setLeaveTimeout(timeout);
     }
   };
 
@@ -143,8 +183,10 @@ const VideoPlayer = ({
     const handleCanPlay = () => {
       // Enough data is available to start playing
       setIsLoading(false);
+      setVideoReady(true);
       if (isHovered && playOnHover && !hasError) {
         setShowThumbnail(false);
+        // Immediate play since video is ready
         video.play().catch((error) => {
           console.warn('Video play failed on canplay:', error);
         });
@@ -316,8 +358,8 @@ const VideoPlayer = ({
           loop
           muted={isMuted}
           playsInline
-          preload="metadata"
-          className={`w-full h-full object-cover rounded-xl transition-opacity duration-300 ${
+          preload={hasIntersected ? "auto" : "none"} // Aggressive preloading when visible
+          className={`w-full h-full object-cover rounded-xl transition-opacity duration-200 ${
             showThumbnail ? 'opacity-0 absolute inset-0' : 'opacity-100'
           }`}
         />

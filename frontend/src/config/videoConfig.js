@@ -10,12 +10,12 @@ export const VIDEO_CONFIG = {
   },
   
   PREVIEW: {
-    width: 600,
-    height: 400,
+    width: 480, // Reduced size for faster loading
+    height: 320,
     crop: 'fill',
     quality: 'auto:good',
-    format: 'auto',
-    bitrate: '500k'
+    format: 'mp4', // Force MP4 for better compatibility
+    bitrate: '400k' // Balanced quality/speed
   },
   
   FULL_QUALITY: {
@@ -25,13 +25,15 @@ export const VIDEO_CONFIG = {
 
   // Loading behavior
   LOADING: {
-    hoverDelay: 200, // ms before starting video load on hover (reduced for faster response)
-    preloadDistance: 100, // px from viewport to start preloading
-    maxConcurrentLoads: 3, // max videos loading simultaneously
+    hoverDelay: 100, // ms before starting video load on hover (faster response)
+    preloadDistance: 200, // px from viewport to start preloading (larger area)
+    maxConcurrentLoads: 5, // max videos loading simultaneously (increased)
     retryAttempts: 2,
     retryDelay: 1000, // ms
-    minBufferPercent: 10, // minimum % buffered before allowing playback
-    progressiveLoad: true // enable YouTube-style progressive loading
+    minBufferPercent: 5, // minimum % buffered before allowing playback (reduced)
+    progressiveLoad: true, // enable YouTube-style progressive loading
+    aggressivePreload: true, // preload metadata immediately when visible
+    hoverStabilization: 100 // ms delay before pausing on mouse leave
   },
 
   // Performance thresholds

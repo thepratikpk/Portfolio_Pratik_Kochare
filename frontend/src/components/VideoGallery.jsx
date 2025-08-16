@@ -5,6 +5,7 @@ import VideoPlayer from './VideoPlayer';
 import { FiAlertTriangle, FiLoader } from 'react-icons/fi';
 import { API } from '../lib/axios';
 import { videoPreloader } from '../utils/videoPreloader';
+import { videoCacheManager } from '../utils/videoCacheManager';
 
 const VideoGallery = ({ onClose }) => {
   const navigate = useNavigate();
@@ -34,9 +35,10 @@ const VideoGallery = ({ onClose }) => {
         const videoData = response.data.data;
         setVideos(videoData);
 
-        // Start preloading video metadata in background
+        // Start preloading video metadata in background with both systems
         const videoUrls = videoData.map(video => video.videoUrl);
         videoPreloader.queuePreload(videoUrls);
+        videoCacheManager.preloadVideos(videoUrls);
 
       } catch (err) {
         setError(err.message);
@@ -122,7 +124,11 @@ const VideoGallery = ({ onClose }) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                onMouseEnter={() => setHoveredId(video._id)}
+                onMouseEnter={() => {
+                  setHoveredId(video._id);
+                  // Preload this specific video for instant playback
+                  videoCacheManager.preloadVideo(video.videoUrl).catch(() => {});
+                }}
                 onMouseLeave={() => setHoveredId(null)}
                 className={`relative rounded-xl overflow-hidden shadow-lg transition-all duration-300 ${isOtherHovered ? 'blur-sm brightness-75' : ''
                   } ${isHovered ? 'scale-105 sm:scale-110 z-10 shadow-2xl' : ''}`}
